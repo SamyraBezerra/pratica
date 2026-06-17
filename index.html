@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOS Mulher</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f4f4;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+    width:350px;
+    text-align:center;
+}
+
+h1{
+    color:#8e44ad;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+    background:#8e44ad;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#732d91;
+}
+
+.link{
+    color:#8e44ad;
+    cursor:pointer;
+    margin-top:15px;
+    display:block;
+}
+
+#cadastro{
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LOGIN -->
+    <div id="login">
+        <h1>SOS Mulher</h1>
+
+        <input type="email" id="emailLogin" placeholder="E-mail">
+
+        <input type="password" id="senhaLogin" placeholder="Senha">
+
+        <button onclick="login()">Entrar</button>
+
+        <span class="link" onclick="mostrarCadastro()">
+            Não possui conta? Cadastre-se
+        </span>
+    </div>
+
+    <!-- CADASTRO -->
+    <div id="cadastro">
+        <h1>Cadastro</h1>
+
+        <input type="text" id="nome" placeholder="Nome Completo">
+
+        <input type="email" id="emailCadastro" placeholder="E-mail">
+
+        <input type="password" id="senhaCadastro" placeholder="Senha">
+
+        <button onclick="cadastrar()">Cadastrar</button>
+
+        <span class="link" onclick="mostrarLogin()">
+            Já possui conta? Entrar
+        </span>
+    </div>
+
+</div>
+
+<script>
+
+function mostrarCadastro(){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("cadastro").style.display = "block";
+}
+
+function mostrarLogin(){
+    document.getElementById("cadastro").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+
+function cadastrar(){
+
+    let nome = document.getElementById("nome").value;
+    let email = document.getElementById("emailCadastro").value;
+    let senha = document.getElementById("senhaCadastro").value;
+
+    localStorage.setItem("nome", nome);
+    localStorage.setItem("email", email);
+    localStorage.setItem("senha", senha);
+
+    alert("Cadastro realizado com sucesso!");
+
+    mostrarLogin();
+}
+
+function login(){
+
+    let email = document.getElementById("emailLogin").value;
+    let senha = document.getElementById("senhaLogin").value;
+
+    let emailSalvo = localStorage.getItem("email");
+    let senhaSalva = localStorage.getItem("senha");
+
+    if(email === emailSalvo && senha === senhaSalva){
+
+        alert("Login realizado com sucesso!");
+
+        document.querySelector(".container").innerHTML = `
+            <h1>Bem-vinda!</h1>
+            <p>Você entrou no sistema SOS Mulher.</p>
+            <br>
+            <button onclick="logout()">Sair</button>
+        `;
+
+    }else{
+        alert("E-mail ou senha incorretos!");
+    }
+}
+
+function logout(){
+    location.reload();
+}
+
+</script>
+
+</body>
+</html>
